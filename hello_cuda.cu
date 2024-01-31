@@ -8,7 +8,8 @@ __global__ void hello_world() {
 }
 
 int main() {
-  //Runs it once (grid x block)
+  //Runs it once (grid dimension x block dimension)
+  //Note that both grid and block can be up to 3-dimensions
   //hello_world << <1, 1>> > ();
   //Runs it 20 times
   hello_world << <1, 20>> > ();
