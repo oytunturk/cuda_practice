@@ -8,7 +8,10 @@ __global__ void hello_world() {
 }
 
 int main() {
-  hello_world << <1, 1>> > ();
+  //Runs it once (grid x block)
+  //hello_world << <1, 1>> > ();
+  //Runs it 20 times
+  hello_world << <1, 20>> > ();
 
   //Wait until kernel call is completed
   cudaDeviceSynchronize();
