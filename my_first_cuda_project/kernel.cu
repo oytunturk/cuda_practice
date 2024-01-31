@@ -24,9 +24,9 @@ int main() {
     printf("{1,2,3,4,5} + {10,20,30,40,50} = {%d,%d,%d,%d,%d}\n", 
         c[0], c[1], c[2], c[3], c[4]);
     
-    //cudaDeviceReset must be called before exiting in order for porifling and tracing 
+    //cudaDeviceReset must be called before exiting in order for profiling and tracing 
     // tools such as Nsight and Visual Profiles to show complete traces 
-    cudaStatus = cudeDeviceReset();
+    cudaStatus = cudaDeviceReset();
     if (cudaStatus != cudaSuccess) {
         fprintf(stderr, "addWithCuda failed!");
         return 1;
