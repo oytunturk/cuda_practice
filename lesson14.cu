@@ -4,8 +4,13 @@
 #include <stdio.h>
 #include <math.h>
 
+#include "my_tools.cuh"
+
+//Add two arrays
+//Also error handling
 __global__ void sum_array_gpu_1d(int *a, int *b, int *result, size_t len) {
   int gid = blockDim.x * blockIdx.x + threadIdx.x;
+
 
   if (gid < len) {
     //printf("gid = %d\n", gid);
@@ -21,8 +26,7 @@ int main() {
   int *d_arr2 = NULL;
   int *h_gpu_result = NULL;
   int *d_gpu_result = NULL;
-  int *h_cpu_result = NULL;
-  
+  int *h_cpu_result = NULL;  
   int i; 
   int len = 100;
 
@@ -37,12 +41,14 @@ int main() {
   h_cpu_result = (int*)malloc(byte_size);
   for (i=0; i<len; i++) h_arr1[i]= (i*10);
   for (i=0; i<len; i++) h_arr2[i]= (i*5);
-  cudaMalloc((void**)(&d_arr1), byte_size);
-  cudaMalloc((void**)(&d_arr2), byte_size);
-  cudaMalloc((void**)(&d_gpu_result), byte_size);
-  cudaMemcpy(d_arr1, h_arr1, byte_size, cudaMemcpyHostToDevice);
-  cudaMemcpy(d_arr2, h_arr2, byte_size, cudaMemcpyHostToDevice);
+  
+  gpuErrchk(cudaMalloc((void**)(&d_arr1), byte_size));
+  gpuErrchk(cudaMalloc((void**)(&d_arr2), byte_size));
+  gpuErrchk(cudaMalloc((void**)(&d_gpu_result), byte_size));
 
+  gpuErrchk(cudaMemcpy(d_arr1, h_arr1, byte_size, cudaMemcpyHostToDevice));
+  gpuErrchk(cudaMemcpy(d_arr2, h_arr2, byte_size, cudaMemcpyHostToDevice));
+  
   sum_array_gpu_1d << <grid, block>> > (d_arr1, d_arr2, d_gpu_result, len);
 
   //Wait until kernel call is completed
