@@ -46,5 +46,6 @@ int main() {
   return 0;
 }
 
-//You can profile these two functions using: (assuming your output was set to hello_cuda in nvcc (i.e. you compiled using !nvcc hello_cuda.cu -o hello_cuda
+//You can profile these two functions using: (assuming your output was set to hello_cuda in nvcc (i.e. you compiled using !nvcc -G hello_cuda.cu -o hello_cuda)
+// -G turns off compiler optimizations. Still some optimizations are happening automatically so your branch efficiency will not be as worse as the worst case.
 //!nvprof --metrics branch_efficiency hello_cuda
