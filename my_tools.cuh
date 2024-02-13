@@ -12,3 +12,25 @@ inline void gpuAssert(cudaError_t err_code, const char *file, int line, bool abo
     if(abort) exit(err_code);
   }
 }
+
+void compare_arrays(float * a, float * b, float size)
+{
+	for (int i = 0; i < size; i++)
+	{
+		if (a[i] != b[i])
+		{
+			printf("Arrays are different \n");
+			
+			return;
+		}
+	}
+	printf("Arrays are same \n");
+}
+
+void sum_array_cpu(float* a, float* b, float *c, int size)
+{
+	for (int i = 0; i < size; i++)
+	{
+		c[i] = a[i] + b[i];
+	}
+}
